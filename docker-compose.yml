@@ -1,0 +1,67 @@
+version: "3"
+services:
+  db:
+    image: mariadb:10
+    restart: "on-failure"
+    ports:
+      - 33061:3306
+    volumes:
+      - db:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+  test_db:
+    image: mariadb:10
+    restart: "on-failure"
+    ports:
+      - 33062:3306
+    volumes:
+      - test_db:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${TEST_DB_DATABASE}
+      MYSQL_USER: ${TEST_DB_USERNAME}
+      MYSQL_PASSWORD: ${TEST_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${TEST_DB_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    restart: "on-failure"
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+      - test_db
+  adminer:
+    image: adminer
+    restart: "on-failure"
+    ports:
+      - 8001:8080
+    env_file:
+      - .env
+    depends_on:
+      - db
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: db
+      ADMINER_DEFAULT_DB_NAME: ${DB_DATABASE}
+volumes:
+  db:
+  test_db:
+
