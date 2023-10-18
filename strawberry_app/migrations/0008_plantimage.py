@@ -4,21 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('strawberry_app', '0007_alter_months_culture'),
+        ("strawberry_app", "0007_alter_months_culture"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PlantImage',
+            name="PlantImage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(null=True, upload_to='documents/')),
-                ('image', models.ImageField(null=True, upload_to='profile_pics/')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("file", models.FileField(null=True, upload_to="documents/")),
+                ("image", models.ImageField(null=True, upload_to="profile_pics/")),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

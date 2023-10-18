@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from strawberry_app.models import PlantImage
 from django.core.exceptions import ValidationError
 
+
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30)
     email = forms.EmailField()
@@ -11,8 +12,8 @@ class RegistrationForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
-        password = cleaned_data.get('password')
-        confirmation = cleaned_data.get('confirmation')
+        password = cleaned_data.get("password")
+        confirmation = cleaned_data.get("confirmation")
 
         if password and confirmation and password != confirmation:
             raise forms.ValidationError("Passwords don't match")
@@ -20,9 +21,9 @@ class RegistrationForm(forms.Form):
 
     def save(self):
         user = User.objects.create_user(
-            username=self.cleaned_data['username'],
-            email=self.cleaned_data['email'],
-            password=self.cleaned_data['password']
+            username=self.cleaned_data["username"],
+            email=self.cleaned_data["email"],
+            password=self.cleaned_data["password"],
         )
         return user
 
@@ -32,5 +33,4 @@ class PlantImageForm(forms.ModelForm):
 
     class Meta:
         model = PlantImage
-        fields = ('image', 'video', 'delete')
-
+        fields = ("image", "video", "delete")

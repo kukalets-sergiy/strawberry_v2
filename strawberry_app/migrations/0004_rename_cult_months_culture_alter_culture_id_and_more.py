@@ -4,30 +4,35 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('strawberry_app', '0003_profile'),
+        ("strawberry_app", "0003_profile"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='months',
-            old_name='cult',
-            new_name='culture',
+            model_name="months",
+            old_name="cult",
+            new_name="culture",
         ),
         migrations.AlterField(
-            model_name='culture',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="culture",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='months',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="months",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='profile',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="profile",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
     ]

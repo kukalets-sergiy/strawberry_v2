@@ -1,13 +1,13 @@
 from instapy import InstaPy
 from instapy import smart_run
-import import insta_auth
+import insta_auth
 import time
 
 insta_username = ''
 insta_password = ''
 session = InstaPy(username=insta_username, password=insta_password)
 with smart_run(session):
-    delay = 600  
+    delay = 600
     session.set_action_delays(enabled=True, follow=delay, like=delay, unfollow=delay)
 
     session.set_do_follow(enabled=True, percentage=100)

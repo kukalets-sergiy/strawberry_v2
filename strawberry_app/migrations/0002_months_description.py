@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('strawberry_app', '0001_initial'),
+        ("strawberry_app", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='months',
-            name='description',
+            model_name="months",
+            name="description",
             field=models.TextField(blank=True),
         ),
     ]

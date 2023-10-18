@@ -5,10 +5,10 @@ from strawberry_app.models import *
 class CultureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Culture
-        fields = '__all__'
+        fields = "__all__"
 
 
 class MonthsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Months
-        fields = '__all__'
+        fields = "__all__"

@@ -4,20 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('strawberry_app', '0008_plantimage'),
+        ("strawberry_app", "0008_plantimage"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MediaFile',
+            name="MediaFile",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(upload_to='media/')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("file", models.FileField(upload_to="media/")),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

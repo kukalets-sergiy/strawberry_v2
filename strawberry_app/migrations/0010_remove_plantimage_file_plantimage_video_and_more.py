@@ -4,24 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('strawberry_app', '0009_mediafile'),
+        ("strawberry_app", "0009_mediafile"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='plantimage',
-            name='file',
+            model_name="plantimage",
+            name="file",
         ),
         migrations.AddField(
-            model_name='plantimage',
-            name='video',
-            field=models.FileField(blank=True, upload_to='videos/'),
+            model_name="plantimage",
+            name="video",
+            field=models.FileField(blank=True, upload_to="videos/"),
         ),
         migrations.AlterField(
-            model_name='plantimage',
-            name='image',
-            field=models.ImageField(default='default_image.jpg', upload_to='profile_pics/'),
+            model_name="plantimage",
+            name="image",
+            field=models.ImageField(default="default_image.jpg", upload_to="profile_pics/"),
         ),
     ]

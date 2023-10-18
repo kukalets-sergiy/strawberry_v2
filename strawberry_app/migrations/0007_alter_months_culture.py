@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('strawberry_app', '0006_rename_name_culture_culture'),
+        ("strawberry_app", "0006_rename_name_culture_culture"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='months',
-            name='culture',
-            field=models.ManyToManyField(related_name='months', to='strawberry_app.culture'),
+            model_name="months",
+            name="culture",
+            field=models.ManyToManyField(related_name="months", to="strawberry_app.culture"),
         ),
     ]
