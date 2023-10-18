@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <div class="container">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+            aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggle">
+        <div class="navbar-nav mr-auto">
+        </div>
+        <div class="navbar-nav">
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'homepage' %}">Homepage</a>
+                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                {% if not is_logout %}
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% endif %}
+            {% else %}
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                {% if is_logout %}
+                    <p class="nav-item nav-link text-info">You have successfully logged out.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    </nav>
+</header>
+
+<head>
+    <title>All objects</title>
+</head>
+    <h2>Cultures</h2>
+      <ul>
+       {% for culture in cultures %}
+          <li>ID: {{ culture.id }} - {{ culture }}</li>
+        {% endfor %}
+          </ul>
+          <h2>Months</h2>
+          {% for month in months %}
+            <ul>
+              <li>ID: {{ month.id }}</li>
+              <li>Month: {{ month.month }}</li>
+              <li>Culture:
+                <ul>
+                {% for c in month.culture.all %}
+                  <li>{{ c }}</li>
+                {% endfor %}
+                </ul>
+              </li>
+              <li>Description: {{ month.description|default:"" | linebreaksbr }}</li>
+            </ul>
+       {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+
+
+

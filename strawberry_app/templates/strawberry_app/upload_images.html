@@ -1,0 +1,46 @@
+
+
+{% block content %}
+
+        <div class="container">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+              </div>
+              <div class="form-group">
+    <label for="video">Video:</label>
+    <input type="file" name="video" accept="video/*">
+</div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          <h2 class="my-4">Plant Image</h2>
+          <div class="row">
+            {% if file_url %}
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+              <img src="{{ file_url }}" class="img-fluid">
+              <br>
+              <a class="btn btn-dark my-4" href="/">Return to Homepage</a>
+            </div>
+            {% else %}
+            <p>No plant images added.</p>
+            {% endif %}
+          </div>
+        </div>
+    <div>
+        <h2>Files</h2>
+        <ul>
+        {% for file in files %}
+            <li>{{ file }}
+                <form method="post" action="{% url 'delete_file' file.filename %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No files found.</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<head>
+    <title>Action</title>
+</head>
+    <h2>Culture Month and Description:</h2>
+<div>
+  {% for culture in cultures %}
+      <ul>
+        <ul>
+            {% for month in months %}
+              {% if culture.id == 1 and month.id <= 12%}
+                <li>Cultures:{{ culture }}</li>
+              <li>Month: {{ month }}</li>
+              <li>Description: {{ month.description|default:"" | linebreaksbr }}</li>
+              {% endif %}
+
+            {% if culture.id == 2 and month.id <= 24 and month.id >= 13 %}
+                <li>Cultures:{{ culture }}</li>
+              <li>Month: {{ month }}</li>
+              <li>Description: {{ month.description|default:"" | linebreaksbr }}</li>
+            {% endif %}
+            {% if culture.id == 3 and month.id > 24 %}
+                <li>Cultures:{{ culture }}</li>
+              <li>Month: {{ month }}</li>
+              <li>Description: {{ month.description|default:"" | linebreaksbr }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </ul>
+  {% endfor %}
+</div>
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto"></div>
+                <div class="navbar-nav" style="justify-content: flex-end;">
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'homepage' %}">Homepage</a>
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                        {% if not is_logout %}
+                            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                        {% if is_logout %}
+                            <p class="nav-item nav-link text-info">You have successfully logged out.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock content %}
+
+
+
+
+

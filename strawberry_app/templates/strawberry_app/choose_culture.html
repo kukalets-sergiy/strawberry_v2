@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <h1>Cultures</h1>
+    <form>
+      <label for="culture">Select culture:</label>
+      <select name="culture" id="culture">
+        <option value="">-- Choose a culture --</option>
+        {% for culture in cultures %}
+        <option value="{{ culture.id }}" data-month-description="{{ culture.months.first.description }}">{{ culture.culture }}</option>
+        {% endfor %}
+      </select>
+    </form>
+    <div id="description-container">
+      <h2>Description:</h2>
+      <p id="description-placeholder">Select a culture to view the description.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cultureSelect = document.getElementById('culture');
+  const descriptionContainer = document.getElementById('description-container');
+  const descriptionPlaceholder = document.getElementById('description-placeholder');
+
+  cultureSelect.addEventListener('change', () => {
+    const selectedCultureId = cultureSelect.value;
+    if (selectedCultureId) {
+      descriptionContainer.innerHTML = '';
+
+      fetch(`/api/${selectedCultureId}/choose_culture/`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.months.length > 0) {
+            let descriptions = '';
+
+            data.months.forEach(month => {
+              descriptions += `<h2>Description:</h2><p>${month.description}</p>`;
+            });
+
+            descriptionPlaceholder.style.display = 'none';
+            descriptionContainer.innerHTML = descriptions;
+          } else {
+            descriptionPlaceholder.style.display = 'block';
+            descriptionContainer.innerHTML = '';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          descriptionPlaceholder.style.display = 'block';
+          descriptionContainer.innerHTML = '';
+        });
+    } else {
+      descriptionPlaceholder.style.display = 'block';
+      descriptionContainer.innerHTML = '';
+    }
+  });
+</script>
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <div class="container">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+            aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggle">
+      <div class="navbar-nav mr-auto">
+        </div>
+        <div class="navbar-nav">
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'homepage' %}">Homepage</a>
+                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                {% if not is_logout %}
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% endif %}
+            {% else %}
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                {% if is_logout %}
+                    <p class="nav-item nav-link text-info">You have successfully logged out.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    </nav>
+</header>
+{% endblock content %}
